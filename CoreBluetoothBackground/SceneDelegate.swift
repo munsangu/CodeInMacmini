@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  CoreBluetoothBackground
-//
-//  Created by MTISiOSDev on 2023/07/05.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
