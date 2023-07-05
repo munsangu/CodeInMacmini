@@ -26,6 +26,47 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        self.receiveRandomNumber()
+    }
+    
+    func receiveRandomNumber() {
+        // Set the URL of the PHP script
+        let url = URL(string: "https://wkwebview.run.goorm.site/randomNumber.php")
+        
+        // Create a URL session
+        let session = URLSession.shared
+        
+        // Create a data task for the URL session
+        let task = session.dataTask(with: url!) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            // Check if data was received
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                // Parse the JSON data
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    // Handle the received data
+                    let value1 = json["value1"] as? Int
+                    let value2 = json["value2"] as? Int
+                    
+                    // Do something with the values
+                    print("Value 1: \(value1 ?? 0)")
+                    print("Value 2: \(value2 ?? 0)")
+                }
+            } catch {
+                print("Error parsing JSON: \(error)")
+            }
+        }
+        
+        // Start the data task
+        task.resume()
     }
     
 }
@@ -72,42 +113,42 @@ extension ViewController: CBCentralManagerDelegate {
         connectedDeivce.text = "\(stringWithoutWhitespace ?? "unknown Device")"
         connectPeripheral.discoverServices(nil)
         
-        beginBackgroundTask()
+//        beginBackgroundTask()
     }
     
-    func checkBackgroundTaskExpiration() {
-        guard let expiration = backgroundTaskExpiration else { return }
-        
-        if DispatchTime.now() > expiration {
-            self.endBackgroundTask()
-        }
-    }
-    
-    func beginBackgroundTask() {
-        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "BackgroudTask") {
-            self.endBackgroundTaskIfNeed()
-        }
-        
-        backgroundTaskExpiration = DispatchTime.now() + .seconds(30)
-        
-        DispatchQueue.main.async {
-            self.connectionTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.checkConnectionStatus), userInfo: nil, repeats: true)
-            RunLoop.current.add(self.connectionTimer!, forMode: .default)
-            self.checkBackgroundTaskExpiration()
-        }
-    }
-
-    func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(backgroundTask)
-        backgroundTask = .invalid
-        backgroundTaskExpiration = nil
-    }
-    
-    func endBackgroundTaskIfNeed() {
-        if backgroundTask != .invalid {
-            self.endBackgroundTask()
-        }
-    }
+//    func checkBackgroundTaskExpiration() {
+//        guard let expiration = backgroundTaskExpiration else { return }
+//
+//        if DispatchTime.now() > expiration {
+//            self.endBackgroundTask()
+//        }
+//    }
+//
+//    func beginBackgroundTask() {
+//        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "BackgroudTask") {
+//            self.endBackgroundTaskIfNeed()
+//        }
+//
+//        backgroundTaskExpiration = DispatchTime.now() + .seconds(30)
+//
+//        DispatchQueue.main.async {
+//            self.connectionTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.checkConnectionStatus), userInfo: nil, repeats: true)
+//            RunLoop.current.add(self.connectionTimer!, forMode: .default)
+//            self.checkBackgroundTaskExpiration()
+//        }
+//    }
+//
+//    func endBackgroundTask() {
+//        UIApplication.shared.endBackgroundTask(backgroundTask)
+//        backgroundTask = .invalid
+//        backgroundTaskExpiration = nil
+//    }
+//
+//    func endBackgroundTaskIfNeed() {
+//        if backgroundTask != .invalid {
+//            self.endBackgroundTask()
+//        }
+//    }
     
     // Once a month
     func sendTokenToServer() {
@@ -137,13 +178,13 @@ extension ViewController: CBCentralManagerDelegate {
     @objc func checkConnectionStatus() {
         if connectPeripheral.state == .connected {
             conectionStatus.text = "connect"
-            self.sendTokenToServer()
+//            self.sendTokenToServer()
         } else {
             conectionStatus.text = "disconnect"
             connectedDeivce.text = "Nothing"
             batterLevelLabel.text = "Nothing"
             pnpIDLabel.text = "Nothing"
-            self.endBackgroundTaskIfNeed()
+//            self.endBackgroundTaskIfNeed()
         }
     }
     
