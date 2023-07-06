@@ -3,6 +3,7 @@
 // 2. Background Mode에서도 블루투스 연결 지속되야 함
 // (3. Background Mode에서 서버와 통신하는 등의 작업은 30초 이내로 해결해야함)
 // 4. Background Mode에서도 데이터가 지속적으로 들어와야 함
+// 5. 하드웨어 필요함
 
 import UIKit
 import CoreBluetooth
