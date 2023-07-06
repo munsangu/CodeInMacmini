@@ -26,48 +26,47 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        self.receiveRandomNumber()
     }
     
-    func receiveRandomNumber() {
-        // Set the URL of the PHP script
-        let url = URL(string: "https://wkwebview.run.goorm.site/randomNumber.php")
-        
-        // Create a URL session
-        let session = URLSession.shared
-        
-        // Create a data task for the URL session
-        let task = session.dataTask(with: url!) { (data, response, error) in
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
-            
-            // Check if data was received
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            do {
-                // Parse the JSON data
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    // Handle the received data
-                    let value1 = json["value1"] as? Int
-                    let value2 = json["value2"] as? Int
-                    
-                    // Do something with the values
-                    print("Value 1: \(value1 ?? 0)")
-                    print("Value 2: \(value2 ?? 0)")
-                }
-            } catch {
-                print("Error parsing JSON: \(error)")
-            }
-        }
-        
-        // Start the data task
-        task.resume()
-    }
+//    func receiveRandomNumber() {
+//        // Set the URL of the PHP script
+//        let url = URL(string: "https://wkwebview.run.goorm.site/randomNumber.php")
+//
+//        // Create a URL session
+//        let session = URLSession.shared
+//
+//        // Create a data task for the URL session
+//        let task = session.dataTask(with: url!) { (data, response, error) in
+//            if let error = error {
+//                print("Error: \(error)")
+//                return
+//            }
+//
+//            // Check if data was received
+//            guard let data = data else {
+//                print("No data received")
+//                return
+//            }
+//
+//            do {
+//                // Parse the JSON data
+//                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+//                    // Handle the received data
+//                    let value1 = json["value1"] as? Int
+//                    let value2 = json["value2"] as? Int
+//
+//                    // Do something with the values
+//                    print("Value 1: \(value1 ?? 0)")
+//                    print("Value 2: \(value2 ?? 0)")
+//                }
+//            } catch {
+//                print("Error parsing JSON: \(error)")
+//            }
+//        }
+//
+//        // Start the data task
+//        task.resume()
+//    }
     
 }
 
@@ -101,10 +100,11 @@ extension ViewController: CBCentralManagerDelegate {
         connectPeripheral = peripheral
         connectPeripheral.delegate = self
         
-        if peripheral.name == "Smart Tank 510 series" {
-            central.connect(connectPeripheral)
-            central.stopScan()
-        }
+//        if peripheral.name == "Smart Tank 510 series" {
+//            central.connect(connectPeripheral)
+//            conectionStatus.text = "connect"
+//            central.stopScan()
+//        }
         
     }
     
@@ -151,42 +151,42 @@ extension ViewController: CBCentralManagerDelegate {
 //    }
     
     // Once a month
-    func sendTokenToServer() {
-        let url = URL(string: "https://wkwebview.run.goorm.site/backgroundPush.php")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let postString = "value= 1"
-        request.httpBody = postString.data(using: .utf8)
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
-                print("Error: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            if response.statusCode == 200 {
-                if let responseString = String(data: data, encoding: .utf8) {
-                    print("Server response: \(responseString)")
-                }
-            } else {
-                print("Error sending token: HTTP status code \(response.statusCode)")
-            }
-        }
-        task.resume()
-    }
+//    func sendTokenToServer() {
+//        let url = URL(string: "https://wkwebview.run.goorm.site/backgroundPush.php")!
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        let postString = "value= 1"
+//        request.httpBody = postString.data(using: .utf8)
+//        
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//            guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
+//                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+//                return
+//            }
+//            
+//            if response.statusCode == 200 {
+//                if let responseString = String(data: data, encoding: .utf8) {
+//                    print("Server response: \(responseString)")
+//                }
+//            } else {
+//                print("Error sending token: HTTP status code \(response.statusCode)")
+//            }
+//        }
+//        task.resume()
+//    }
     
-    @objc func checkConnectionStatus() {
-        if connectPeripheral.state == .connected {
-            conectionStatus.text = "connect"
+//    @objc func checkConnectionStatus() {
+//        if connectPeripheral.state == .connected {
+//            conectionStatus.text = "connect"
 //            self.sendTokenToServer()
-        } else {
-            conectionStatus.text = "disconnect"
-            connectedDeivce.text = "Nothing"
-            batterLevelLabel.text = "Nothing"
-            pnpIDLabel.text = "Nothing"
+//        } else {
+//            conectionStatus.text = "disconnect"
+//            connectedDeivce.text = "Nothing"
+//            batterLevelLabel.text = "Nothing"
+//            pnpIDLabel.text = "Nothing"
 //            self.endBackgroundTaskIfNeed()
-        }
-    }
+//        }
+//    }
     
 }
 
