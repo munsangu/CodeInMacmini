@@ -1,9 +1,8 @@
 // MARK: 기록 사항
 // 1. 1개월간의 DB들 자체 저장 -> 전송 -> 삭제
-// 2. Background Mode에서도 블루투스 연결 지속되야 함
+// 2. Background Mode에서도 블루투스 연결 지속되야 함 -> 지속 가능 
 // (3. Background Mode에서 서버와 통신하는 등의 작업은 30초 이내로 해결해야함)
-// 4. Background Mode에서도 데이터가 지속적으로 들어와야 함
-// 5. 하드웨어 필요함
+// 4. Background Mode에서도 데이터가 지속적으로 들어와야 함 (Background processing Option)
 
 import UIKit
 import CoreBluetooth
