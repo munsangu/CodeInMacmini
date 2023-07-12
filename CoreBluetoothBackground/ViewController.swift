@@ -58,7 +58,6 @@ class ViewController: UIViewController {
     let batteryLevelChracteristicCBUUID = CBUUID(string: "0x2A19")
     let temperatureUUID = CBUUID(string: "EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6")
     let humidityUUID = CBUUID(string: "EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6")
-    let humidityUUID2 = CBUUID(string: "EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,9 +147,13 @@ extension ViewController: CBPeripheralDelegate {
                     peripheral.readValue(for: characteristic)
                 }
                 
-                if characteristic.uuid == humidityUUID || characteristic.uuid == humidityUUID2 {
+                if characteristic.uuid == humidityUUID {
                     peripheral.setNotifyValue(true, for: characteristic)
                     peripheral.readValue(for: characteristic)
+                    
+                    let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                        peripheral.readValue(for: characteristic)
+                    }
                 }
                                 
                 print("\(characteristic.uuid): properties contains .notify")
