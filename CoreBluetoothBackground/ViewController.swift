@@ -45,9 +45,6 @@ class ViewController: UIViewController {
     
     var centralManager: CBCentralManager!
     var connectPeripheral: CBPeripheral!
-    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-    var connectionTimer: Timer?
-    var backgroundTaskExpiration: DispatchTime?
     
     @IBOutlet weak var connectedDeivce: UILabel!
     @IBOutlet weak var conectionStatus: UILabel!
@@ -62,8 +59,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let options: [String: Any] = [CBCentralManagerOptionRestoreIdentifierKey: "test"]
-        centralManager = CBCentralManager(delegate: self, queue: nil, options: options)
+        centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
 }
