@@ -53,10 +53,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var conectionStatus: UILabel!
     @IBOutlet weak var batterLevelLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
     
     let batteryLevelChracteristicCBUUID = CBUUID(string: "0x2A19")
     let temperatureUUID = CBUUID(string: "EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6")
-        
+    let humidityUUID = CBUUID(string: "EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6")
+    let humidityUUID2 = CBUUID(string: "EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,6 +147,11 @@ extension ViewController: CBPeripheralDelegate {
                     peripheral.setNotifyValue(true, for: characteristic)
                     peripheral.readValue(for: characteristic)
                 }
+                
+                if characteristic.uuid == humidityUUID || characteristic.uuid == humidityUUID2 {
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    peripheral.readValue(for: characteristic)
+                }
                                 
                 print("\(characteristic.uuid): properties contains .notify")
             }
@@ -184,6 +192,21 @@ extension ViewController: CBPeripheralDelegate {
             guard let characteristicData = characteristic.value, let byte = characteristicData.first else { return }
             DispatchQueue.main.async {
                 self.batterLevelLabel.text = "\(String(byte))%"
+            }
+            
+        case humidityUUID:
+            guard let characteristicData = characteristic.value else { return }
+            
+            if characteristicData.count >= 2 {
+                let humidityData = characteristicData.withUnsafeBytes { rawBufferPointer in
+                    let buffer = rawBufferPointer.bindMemory(to: Int16.self).baseAddress!
+                    return buffer.pointee
+                }
+                
+                let humidityPercentage = Float(humidityData)
+                DispatchQueue.main.async {
+                    self.humidityLabel.text = "\(humidityPercentage)%"
+                }
             }
             
         default:

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="5vy-gM-Sa2">
-                                <rect key="frame" x="30" y="119" width="333" height="184"/>
+                                <rect key="frame" x="30" y="119" width="333" height="253"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2ns-9r-uho">
                                         <rect key="frame" x="0.0" y="0.0" width="333" height="20.333333333333332"/>
@@ -88,6 +88,23 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="fCf-dR-fHG">
+                                        <rect key="frame" x="0.0" y="211" width="333" height="42"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xTN-Ma-wMh">
+                                                <rect key="frame" x="0.0" y="0.0" width="166.66666666666666" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88M-io-Vgh">
+                                                <rect key="frame" x="166.66666666666663" y="0.0" width="166.33333333333337" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -104,6 +121,7 @@
                         <outlet property="batterLevelLabel" destination="Oq3-9m-ogH" id="I3A-Mt-gps"/>
                         <outlet property="conectionStatus" destination="h3P-Kw-KEY" id="GSW-FF-9r3"/>
                         <outlet property="connectedDeivce" destination="UFz-4a-vBf" id="P5j-H4-Ycc"/>
+                        <outlet property="humidityLabel" destination="88M-io-Vgh" id="Rqw-EC-UnM"/>
                         <outlet property="temperatureLabel" destination="165-fI-qeL" id="tiz-Rx-nP5"/>
                     </connections>
                 </viewController>
