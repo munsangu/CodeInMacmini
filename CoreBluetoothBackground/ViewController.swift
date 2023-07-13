@@ -1,43 +1,3 @@
-/*
- 
- Temperature Measurement Service
- Characteristic: Temperature Measurement Characteristic
- UUID: EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 온도 값을 읽는 특성
- 
- Humidity Measurement Service
- Characteristic: Humidity Measurement Characteristic
- UUID: EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 습도 값을 읽는 특성
- 
- Device Information Service
- Characteristic: Device Name Characteristic
- UUID: EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 장치 이름을 읽는 특성
- 
- Characteristic: Device Manufacturer Characteristic
- UUID: EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 장치 제조사를 읽는 특성
- 
- Characteristic: Device Model Characteristic
- UUID: EBE0CCB9-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 장치 모델을 읽는 특성
- 
- Characteristic: Device Serial Number Characteristic
- UUID: EBE0CCBA-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 장치 일련 번호를 읽는 특성
- 
- Characteristic: Firmware Revision Characteristic
- UUID: EBE0CCBB-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 펌웨어 버전을 읽는 특성
- 
- Battery Level Service
- Characteristic: Battery Level Characteristic
- UUID: EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6
- Description: 배터리 레벨을 읽는 특성
- 
- */
-
 import UIKit
 import CoreBluetooth
 
@@ -45,6 +5,10 @@ class ViewController: UIViewController {
     
     var centralManager: CBCentralManager!
     var connectPeripheral: CBPeripheral!
+    
+    var temperatureValue: String = " "
+    var humidityValue: String = " "
+    var batteryValue: String = " "
     
     @IBOutlet weak var connectedDeivce: UILabel!
     @IBOutlet weak var conectionStatus: UILabel!
@@ -108,11 +72,6 @@ extension ViewController: CBCentralManagerDelegate {
         connectPeripheral.discoverServices(nil)
     }
     
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        print("central: \(central)")
-        print("dict: \(dict)")
-    }
-    
 }
 
 extension ViewController: CBPeripheralDelegate {
@@ -147,9 +106,6 @@ extension ViewController: CBPeripheralDelegate {
                     peripheral.setNotifyValue(true, for: characteristic)
                     peripheral.readValue(for: characteristic)
                     
-                    let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                        peripheral.readValue(for: characteristic)
-                    }
                 }
                                 
                 print("\(characteristic.uuid): properties contains .notify")
@@ -184,13 +140,14 @@ extension ViewController: CBPeripheralDelegate {
             }
             DispatchQueue.main.async {
                 self.temperatureLabel.text = "\(temperatureData)°C"
-                self.sendToServer(String(temperatureData))
+                self.temperatureValue = String(temperatureData)
             }
             
         case batteryLevelChracteristicCBUUID:
             guard let characteristicData = characteristic.value, let byte = characteristicData.first else { return }
             DispatchQueue.main.async {
                 self.batterLevelLabel.text = "\(String(byte))%"
+                self.batteryValue = "\(String(byte))%"
             }
             
         case humidityUUID:
@@ -205,22 +162,28 @@ extension ViewController: CBPeripheralDelegate {
                 let humidityPercentage = Float(humidityData)
                 DispatchQueue.main.async {
                     self.humidityLabel.text = "\(humidityPercentage)%"
+                    self.humidityValue = "\(humidityPercentage)%"
                 }
             }
+            peripheral.readValue(for: characteristic)
             
         default:
             print("Unhandled Characteristic UUID: \(characteristic.uuid)")
         }
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.sendToServer(temperature: self.temperatureValue, humidity: self.humidityValue, batteryLevel: self.batteryValue)
+        }
+        
     }
     
-    func sendToServer(_ temp: String) {
+    func sendToServer(temperature temp: String, humidity humi: String, batteryLevel battery: String) {
         guard let url = URL(string: "https://wkwebview.run.goorm.site/backgroundPush.php") else {
             print("Invaild URL")
             return
         }
         
-        let parameters = ["value": temp]
+        let parameters = ["temperature": temp, "humidity": humi, "battery": battery]
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: parameters) else {
             print("Failed to serialize data")
