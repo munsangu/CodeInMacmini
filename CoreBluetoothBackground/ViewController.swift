@@ -146,11 +146,11 @@ extension ViewController: CBPeripheralDelegate {
                 self.temperatureLabel.text = "\(temperatureData)°C"
                 self.humidityLabel.text = "\(byteArray[2])%"
                 self.sendToServer(String(temperatureData), String(byteArray[2]))
-                if temperatureData > 26 {
-                    self.playSiren()
-                } else {
-                    self.stopSiren()
-                }
+//                if temperatureData > 26 {
+//                    self.playSiren()
+//                } else {
+//                    self.stopSiren()
+//                }
             }
         
         default:
