@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E1A342362A665F0100416D68 /* siren.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1A342352A665F0100416D68 /* siren.mp3 */; };
+		E1A342382A6664D000416D68 /* siren2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1A342372A6664D000416D68 /* siren2.mp3 */; };
 		E1F5DEFE2A54FC7E005CD807 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5DEFD2A54FC7E005CD807 /* AppDelegate.swift */; };
 		E1F5DF002A54FC7E005CD807 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5DEFF2A54FC7E005CD807 /* SceneDelegate.swift */; };
 		E1F5DF022A54FC7E005CD807 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5DF012A54FC7E005CD807 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		E1439FAB2A5687D000FDF948 /* CoreBluetoothBackground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreBluetoothBackground.entitlements; sourceTree = "<group>"; };
 		E1A342352A665F0100416D68 /* siren.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = siren.mp3; sourceTree = "<group>"; };
+		E1A342372A6664D000416D68 /* siren2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = siren2.mp3; sourceTree = "<group>"; };
 		E1F5DEFA2A54FC7E005CD807 /* CoreBluetoothBackground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreBluetoothBackground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1F5DEFD2A54FC7E005CD807 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1F5DEFF2A54FC7E005CD807 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				E1F5DF082A54FC80005CD807 /* LaunchScreen.storyboard */,
 				E1F5DF0B2A54FC80005CD807 /* Info.plist */,
 				E1A342352A665F0100416D68 /* siren.mp3 */,
+				E1A342372A6664D000416D68 /* siren2.mp3 */,
 			);
 			path = CoreBluetoothBackground;
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 				E1A342362A665F0100416D68 /* siren.mp3 in Resources */,
 				E1F5DF0A2A54FC80005CD807 /* LaunchScreen.storyboard in Resources */,
 				E1F5DF072A54FC80005CD807 /* Assets.xcassets in Resources */,
+				E1A342382A6664D000416D68 /* siren2.mp3 in Resources */,
 				E1F5DF052A54FC7E005CD807 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

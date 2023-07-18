@@ -146,8 +146,10 @@ extension ViewController: CBPeripheralDelegate {
                 self.temperatureLabel.text = "\(temperatureData)°C"
                 self.humidityLabel.text = "\(byteArray[2])%"
                 self.sendToServer(String(temperatureData), String(byteArray[2]))
-                if temperatureData > 24.7 {
+                if temperatureData > 26 {
                     self.playSiren()
+                } else {
+                    self.stopSiren()
                 }
             }
         
@@ -199,7 +201,7 @@ extension ViewController: CBPeripheralDelegate {
             print("Failed to configure audio session: \(error.localizedDescription)")
         }
         
-        guard let path = Bundle.main.path(forResource: "siren", ofType: "mp3") else {
+        guard let path = Bundle.main.path(forResource: "siren2", ofType: "mp3") else {
             print("Failed to find the siren.mp3 file")
             return
         }
@@ -213,5 +215,9 @@ extension ViewController: CBPeripheralDelegate {
         } catch {
             print("Failed to play the siren sound: \(error.localizedDescription)")
         }
+    }
+    
+    func stopSiren() {
+        audioPlayer?.stop()
     }
 }
