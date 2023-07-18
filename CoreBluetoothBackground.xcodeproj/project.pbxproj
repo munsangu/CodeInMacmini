@@ -301,6 +301,7 @@
 				DEVELOPMENT_TEAM = 48A5W8Z795;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CoreBluetoothBackground/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Temp&Humi";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "블루투스 사용한다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -335,6 +336,7 @@
 				DEVELOPMENT_TEAM = 48A5W8Z795;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CoreBluetoothBackground/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Temp&Humi";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "블루투스 사용한다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

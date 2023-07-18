@@ -1,6 +1,7 @@
 import UIKit
 import CoreBluetooth
 import AVFoundation
+import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -12,19 +13,25 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var connectedDeivce: UILabel!
     @IBOutlet weak var conectionStatus: UILabel!
-    @IBOutlet weak var batterLevelLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
-//    let batteryLevelChracteristicCBUUID = CBUUID(string: "0x2A19")
     let temperatureAndHumidityUUID = CBUUID(string: "EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         centralManager = CBCentralManager(delegate: self, queue: nil)
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            if granted {
+                print("Local Notifications permission granted")
+            } else {
+                print("Local Notifications permission denied")
+            }
+        }
     }
-    
+        
 }
 
 extension ViewController: CBCentralManagerDelegate {
@@ -148,6 +155,7 @@ extension ViewController: CBPeripheralDelegate {
                 self.sendToServer(String(temperatureData), String(byteArray[2]))
 //                if temperatureData > 26 {
 //                    self.playSiren()
+//                    self.alertNotification()
 //                } else {
 //                    self.stopSiren()
 //                }
@@ -219,5 +227,25 @@ extension ViewController: CBPeripheralDelegate {
     
     func stopSiren() {
         audioPlayer?.stop()
+    }
+    
+    func alertNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "🚨Warning🚨"
+        content.body = "Emmergency!!! Get out of here!!"
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier = "LocalNotification"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+                print("Failed to schedule notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled successfully")
+            }
+        }
+        
     }
 }
